@@ -16,10 +16,13 @@
       var currentUser = Parse.User.current();
       if(currentUser){
         if(currentUser.attributes.role === "student"){
+          alert("無使用權限");
           window.location = "index.html";
+
           return null;
         }
         else{
+          alert("尚未登入");
           window.location = "logIn.html";
           return null;
         }

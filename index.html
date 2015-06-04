@@ -21,6 +21,7 @@
         $("#role").text(currentUser.attributes.role);
         $("#name").text(currentUser.attributes.username);
       }else{
+        alert("尚未登入");
         window.location = "logIn.html";
         return null;
       }
