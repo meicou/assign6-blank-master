@@ -16,6 +16,14 @@
       /* 顯示登入者名稱，避免未登入者進入此頁面*/
           //提示 1 : 可用轉址的方式，讓未登入的使用者轉址到 logIn.html
           //提示 2 : 請在 <span id="name" > 中顯示使用者名稱，在 <span id="role">中顯示角色  
+      var currentUser = Parse.User.current();
+      if(currentUser){
+        $("#role").text(currentUser.attributes.role);
+        $("#name").text(currentUser.attributes.username);
+      }else{
+        window.location = "logIn.html";
+        return null;
+      }
       
     });
   
@@ -23,7 +31,10 @@
       console.log("Logout clicked");
       /* 執行登出動作，並轉址到 logIn 頁面*/
         // 可參考 : https://parse.com/docs/js/guide#users-current-user
-
+        Parse.User.current();
+        window.location = "logIn.html";
+        return null;
+        
       /* 結束 */
     });
 

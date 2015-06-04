@@ -18,7 +18,8 @@
       user.set("username",$('#username').val());
       user.set("email",$('#email').val());
       user.set("password",$('#password').val());
-      user.set("role",$('#role').val());
+      user.set("role",$('input[name="role"]:checked').val());
+      user.set("attend",false);
 
       user.signUp(null,{
         success : function(user){

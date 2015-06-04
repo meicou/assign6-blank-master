@@ -12,19 +12,31 @@
   <script type="text/javascript" src="js/key.js"></script>
   <script  type="text/javascript">
     $(document).ready(function(){
-      console.log(UserArray);
-      var user = Parse.Object.extend("User");
-      var allUserQusry = new Parse.Query(User)
-      allUserQusry.equalTo("User");
-      allUserQusry.find({
-        success: function(UserArray){
-        console.log(UserArray);
-        for (var i = 0 ; i < UserArray.length ; i++){
-          user = UserArray[i] ;
-          View.addRow(
-            user.id,
-            user.get('User')
-            );
+      console.log('document ready');
+      var currentUser = Parse.User.current();
+      if(currentUser){
+        if(currentUser.attributes.role === "student"){
+          window.location = "index.html";
+          return null;
+        }
+        else{
+          window.location = "logIn.html";
+          return null;
+        }
+      }
+
+      var query = Parse.Query(Parse.User);
+      query.equalTo("attend",true);
+      query.equalTo("role","student");
+
+      query.find({
+        success: function(attendArray){
+        console.log(attendArray);
+        for (var i = 0 ; i < attendArray.length ; i++){
+          var attendance = attendArray[i] ;
+          $('#table').append('<tr data-courseid="'+ attendance.id +'">\
+            <td>'+ attendance.attributes.username +'</td>\
+            </tr>');
         }
       },
       error: function(error){
@@ -40,7 +52,7 @@
         // 提示 1 : 挑選符合條件的使用者
         //         可參考https://parse.com/docs/js/guide#queries-query-constraints
         // 提示 2 : 可使用 jqeury 中的 append 方法將資料顯示在<table id="table">中
-$(table).append()
+
       /* 結束*/
     }); // end of document ready
   </script>
